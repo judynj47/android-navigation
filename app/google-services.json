@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "399421019130",
+    "firebase_url": "https://august-registration-app-default-rtdb.firebaseio.com",
+    "project_id": "august-registration-app",
+    "storage_bucket": "august-registration-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:399421019130:android:230a737e7a05c775e88a43",
+        "android_client_info": {
+          "package_name": "com.example.augustmorningnavigationapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "399421019130-ovgbnluepmgi9el7be3r7qi4vc3slknd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsLDMYY6nlCuUXhcBht0FRDLQcjgbGQac"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "399421019130-ovgbnluepmgi9el7be3r7qi4vc3slknd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
