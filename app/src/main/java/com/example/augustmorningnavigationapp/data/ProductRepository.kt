@@ -13,12 +13,13 @@ import com.google.firebase.database.ValueEventListener
 import java.lang.reflect.Array
 
 class ProductRepository(var navController:NavHostController, var context: Context) {
-    var authRepository:AuthRepository
-    var progress:ProgressDialog
-    var products:ArrayList<Product>
+    var authRepository: AuthRepository
+    var progress: ProgressDialog
+    var products: ArrayList<Product>
+
     init {
-        authRepository = AuthRepository(navController,context)
-        if (!authRepository.isLoggedIn()){
+        authRepository = AuthRepository(navController, context)
+        if (!authRepository.isLoggedIn()) {
             navController.navigate(ROUTE_LOGIN)
         }
         progress = ProgressDialog(context)
@@ -27,30 +28,33 @@ class ProductRepository(var navController:NavHostController, var context: Contex
 
         products = mutableListOf<Product>() as ArrayList<Product>
     }
-    fun saveProduct(productName:String,productQuantity:String,productPrice:String){
+
+    fun saveProduct(productName: String, productQuantity: String, productPrice: String) {
         var id = System.currentTimeMillis().toString()
-        var productData = Product(productName,productQuantity,productPrice,id)
+        var productData = Product(productName, productQuantity, productPrice, id)
         var productRef = FirebaseDatabase.getInstance().getReference()
             .child("Products/$id")
         progress.show()
         productRef.setValue(productData).addOnCompleteListener {
             progress.dismiss()
-            if (it.isSuccessful){
+            if (it.isSuccessful) {
                 Toast.makeText(context, "Saving successful", Toast.LENGTH_SHORT).show()
-            }else{
-                Toast.makeText(context, "ERROR: ${it.exception!!.message}", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(context, "ERROR: ${it.exception!!.message}", Toast.LENGTH_SHORT)
+                    .show()
             }
         }
 
     }
-    fun viewProducts():ArrayList<Product>{
+
+    fun viewProducts(): ArrayList<Product> {
         var ref = FirebaseDatabase.getInstance().getReference().child("Products")
         progress.show()
-        ref.addValueEventListener(object : ValueEventListener{
+        ref.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 progress.dismiss()
                 products.clear()
-                for(snap in snapshot.children){
+                for (snap in snapshot.children) {
                     var product = snap.getValue(Product::class.java)
                     products.add(product!!)
                 }
@@ -65,20 +69,33 @@ class ProductRepository(var navController:NavHostController, var context: Contex
 
 
     }
-    fun deleteProduct(id:String){
+
+    fun deleteProduct(id: String) {
         var delRef = FirebaseDatabase.getInstance().getReference().child("Products/$id")
         progress.show()
         delRef.removeValue().addOnCompleteListener {
             progress.dismiss()
-            if(it.isSuccessful){
+            if (it.isSuccessful) {
                 Toast.makeText(context, "Product deleted", Toast.LENGTH_SHORT).show()
-            }else{
+            } else {
                 Toast.makeText(context, it.exception!!.message, Toast.LENGTH_SHORT).show()
             }
         }
     }
-    fun updateProduct(){
+
+    fun updateProduct(name: String, quantity: String, price: String, id: String) {
+        var updateRef = FirebaseDatabase.getInstance().getReference().child("Products/$id")
+        progress.show()
+        var updateData = Product(name, quantity, price, id)
+        updateRef.setValue(updateData).addOnCompleteListener {
+            progress.dismiss()
+            if (it.isSuccessful) {
+                Toast.makeText(context, "Update successful", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(context, it.exception!!.message, Toast.LENGTH_SHORT).show()
+            }
+
+        }
 
     }
-
 }

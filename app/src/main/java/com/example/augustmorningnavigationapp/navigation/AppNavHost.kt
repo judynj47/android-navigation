@@ -10,6 +10,8 @@ import com.example.augustmorningnavigationapp.ui.theme.pages.about.AboutScreen
 import com.example.augustmorningnavigationapp.ui.theme.pages.home.HomeScreen
 import com.example.augustmorningnavigationapp.ui.theme.pages.login.LoginScreen
 import com.example.augustmorningnavigationapp.ui.theme.pages.products.AddProductsScreen
+import com.example.augustmorningnavigationapp.ui.theme.pages.products.UpdateProductsScreen
+import com.example.augustmorningnavigationapp.ui.theme.pages.products.ViewProductsScreen
 import com.example.augustmorningnavigationapp.ui.theme.pages.signup.SignupScreen
 
 @Composable
@@ -36,9 +38,14 @@ fun AppNavHost(modifier: Modifier = Modifier,
             AddProductsScreen(navController)
         }
         composable(ROUTE_VIEW_PRODUCTS) {
+            ViewProductsScreen(navController)
            //Design view products screen
         // ViewProductsScreen(navController)
         }
+        composable(ROUTE_UPDATE_PRODUCTS + "/{id}"){ passedData->
+            UpdateProductsScreen(navController, passedData.arguments?.getString("id")!!)
+        }
+
 
 
     }

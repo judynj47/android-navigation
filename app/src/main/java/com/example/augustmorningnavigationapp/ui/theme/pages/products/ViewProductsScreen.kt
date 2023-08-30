@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.augustmorningnavigationapp.data.ProductRepository
+import com.example.augustmorningnavigationapp.navigation.ROUTE_UPDATE_PRODUCTS
 
 @Composable
 fun ViewProductsScreen(navController:NavHostController){
@@ -44,17 +45,18 @@ fun ViewProductsScreen(navController:NavHostController){
                 ProductItem(name = productName,
                     quantity = productQuantity,
                     price = productPrice,
-                    id = id)
+                    id = id,
+                    navController = navController,
+                    productRepository = productRepository)
             }
         }
     }
     
 }
 @Composable
-fun ProductItem(name:String, quantity:String, price:String, id:String){
-    var context = LocalContext.current
-    var navController = rememberNavController()
-    var productRepository = ProductRepository(navController,context)
+fun ProductItem(name:String, quantity:String, price:String, id:String,
+                navController: NavHostController, productRepository: ProductRepository){
+
     Column(
         modifier = Modifier.fillMaxWidth()) {
         Text(text = name)
@@ -66,7 +68,9 @@ fun ProductItem(name:String, quantity:String, price:String, id:String){
             Text(text = "Delete")
             
         }
-        Button(onClick = { /*TODO*/ }) {
+        Button(onClick = {
+            navController.navigate(ROUTE_UPDATE_PRODUCTS + "/$id")
+        }) {
             Text(text = "Update")
             
         }
